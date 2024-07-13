@@ -1,5 +1,5 @@
 {
-  "name": "mathpower",
+  "name": "general-mathpower",
   "version": "1.0.0",
   "description": "Everything is ready in the package, in this version only addition is supported, the other operations will be available soon.",
   "main": "main.js",

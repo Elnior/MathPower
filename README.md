@@ -25,7 +25,7 @@ I didn't like this, it made me feel that *JavaScript* environment was not reliab
 ## 0.008 + 0.001
 
 ```javascript
-import MathPower from 'mathpower';
+import MathPower from 'general-mathpower';
 
 // Now
 console.log(0.008 + 0.001);
