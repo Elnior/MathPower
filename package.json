@@ -1,0 +1,21 @@
+{
+  "name": "mathpower",
+  "version": "1.0.0",
+  "description": "Everything is ready in the package, in this version only addition is supported, the other operations will be available soon.",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elnior/MathPower.git"
+  },
+  "keywords": ["power", "math", "0.001", "0.008"],
+  "author": "Elnior Loreh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Elnior/MathPower/issues"
+  },
+  "homepage": "https://github.com/Elnior/MathPower#readme"
+}
