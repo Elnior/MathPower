@@ -1,6 +1,6 @@
 /*
--- MathPower@1.0.0 < \ Elnior Loreh / > --
-last update: Fri, 12 july of the year 2024
+-- MathPower@1.0.1 < \ Elnior Loreh / > --
+last update: Wed, 17 july of the year 2024
 */
 // Spanish:
 // La clase MathPower es la clase que
@@ -61,7 +61,7 @@ export default class MathPower {
           break;
         }
       }
-      return forReplace;
+      return forReplace == ""? "0" : forReplace;
     }
     catch (error) {
       throw error;
@@ -96,10 +96,30 @@ export default class MathPower {
       console.warn(error.message);
     }
   }
+  // important comparator to detect the largest absolute value.
+  static compare (d, k) {
+    let countEqual = 0;
+    for (let index = 0; index < d.length; index++) {
+      if (d[index] == ".") {
+        countEqual++;
+        continue;
+      }
+      else if (d[index] == k[index]) 
+        countEqual++;
+        
+      if (Number(d[index]) > Number(k[index]))
+        return true;
+      else {}
+      if (Number(d[index]) < Number(k[index]))
+        return false;
+      else {}
+    }
+    return (countEqual == d.length)? null : false;
+  }
   static sum (...elements) {
     // validator \/ \/ \/ \/
     if (elements.length < 2)
-      return elements[0];
+      return MathPower.purifier(elements[0]);
     else 
       MathPower.validator(elements);
       
@@ -204,5 +224,113 @@ export default class MathPower {
     }
     // the total addition
     return MathPower.purifier( actual );
+  }
+  static subt (absoluteValue, ...negativeValues) {
+    // Resulting negative value
+    let negativeValue = MathPower.sum(...negativeValues);
+    
+    let elementActual = negativeValue.split("");
+    let units = absoluteValue.split("");
+    // Unit placement error prevention block.
+    if (units.indexOf(".") !== -1 || elementActual.indexOf(".") !== -1) {
+      if (units.indexOf(".") == -1)
+        units.push(".");
+      else if (elementActual.indexOf(".") == -1)
+        elementActual.push(".");
+    }
+    let lastDx = (units.length > elementActual.length ? units.length : elementActual.length) - 1;
+    // Position of the most relevant unit
+    let [pos1, pos2] = [units.indexOf("."), elementActual.indexOf(".")];
+    let pointPresent = pos1 !== -1 || pos2 !== -1;
+    let minPos = (pos1 < pos2 ? pos1 : pos2) - 1;
+    let unitPos = (pos1 > pos2) ? pos1 - 1 : (pos2 === -1) ? lastDx : pos2 - 1;
+    let position = 0;
+    // Completer loop:
+    while (position <= unitPos) {
+      let unit1 = units[position],
+        unit2 = elementActual[position];
+      if (pointPresent) {
+        // The relevant and secondary value
+        let relevant = (pos1 > pos2) ? units : elementActual;
+        let other = (pos1 < pos2) ? units : elementActual;
+        let count = 1;
+        // Loop from the relevant unit point to the highest unit detected
+        while (count <= (unitPos - minPos)) {
+          other.unshift("0");
+          count++;
+        }
+        // From here the rational point of both is in the same position
+    
+        let longLength = (elementActual.length > units.length) ? elementActual.length : units.length;
+        // Point position
+        count = unitPos + 1;
+        while (count < longLength) {
+          if (elementActual[count] == undefined)
+            elementActual.push("0");
+          else {}
+    
+          if (units[count] == undefined)
+            units.push("0");
+          else {}
+          count++;
+        }
+        break;
+      }
+      else {
+        if (unit1 == undefined)
+          units.unshift("0");
+    
+        else if (unit2 == undefined)
+          elementActual.unshift("0");
+      }
+      position++;
+    }
+    
+    const comparation = MathPower.compare(units, elementActual),
+    result = [];
+    
+    let inverted = false;
+    if (comparation == null)
+      return "0";
+    else if (comparation == false) {
+      let forR1 = units,
+        forR2 = elementActual;
+      units = forR2;
+      elementActual = forR1;
+      inverted = true;
+    }
+    
+    lastDx = elementActual.length;
+    
+    // Subtraction loop.
+    while (lastDx > 0) {
+      lastDx--;
+      let unit1 = units[lastDx],
+        unit2 = elementActual[lastDx];
+      
+      if (unit1 == ".") {
+        result.unshift(unit2);
+        continue;
+      }
+      let operation = Number(unit1) - Number(unit2);
+      if (operation < 0 && lastDx !== 0) {
+        operation += 10;
+        let i = lastDx;
+        while (i > 0) {
+          i--;
+          if (units[i] == "0")
+            units[i] = "9";
+          else if (units[i] !== ".") {
+            units[i] = String(Number(units[i]) - 1);
+            break;
+          }
+        }
+      }
+      result.unshift(String(operation));
+    }
+    // The total subtraction:
+    let totalSubtraction = MathPower.purifier(result.join(""));
+    
+    return (inverted? "-" : "") + totalSubtraction;
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "general-mathpower",
-  "version": "1.0.0",
-  "description": "Everything is ready in the package, in this version only addition is supported, the other operations will be available soon.",
+  "version": "1.0.1",
+  "description": "Everything is ready in the package, only addition and subtraction are supported in this version, the other operations will be available soon.",
   "main": "main.js",
   "type": "module",
   "scripts": {
